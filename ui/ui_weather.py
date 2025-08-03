@@ -5,6 +5,7 @@ import api as api
 import utils.timezone_utils as timezone_utils
 import ui.ui_settings as ui_settings
 import ui.ui_favorite as ui_favorite
+import ui.ui_map as ui_map
 
 
 def show_weather_country_city_select_box():
@@ -44,6 +45,7 @@ def show_weather_country_city_select_box():
                 data = api.get_data_weather_by_city(selected_city, units=st.session_state.units)
                 if data:
                     show_weather_details(data, selected_city, selected_country,  st.session_state.units_sign)
+                    ui_map.show_map_for_location(lat, lng, selected_city, selected_country)
         else:
             st.error("City not found in data.")
 

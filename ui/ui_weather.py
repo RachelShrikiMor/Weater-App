@@ -1,0 +1,86 @@
+import streamlit as st
+import pycountry
+
+import api as api
+
+
+def show_weather_country_city_select_box():
+    """
+        this function load the countries
+        and cities by the choosing country
+        and show country select_box and city select_box for user
+    """
+    countries = get_countries_dic()
+    # sorted(countries.keys())
+    selected_country = st.selectbox("Please_select_a_country", sorted(countries.keys()), index=None,
+                                    placeholder="Please_select_a_country")
+
+    if selected_country:
+        st.text(selected_country)
+        df_cities = api.get_cities_data_from_file_by_country_name(selected_country)
+        if df_cities is not None and not df_cities.empty:
+            cities = df_cities.city
+
+            # city names based on country, show relevant dropdown cities
+            selected_city = st.selectbox("Please select a city", cities, index=None,
+                                         placeholder="Please select city from the list")
+            if selected_city:
+
+                city_data = df_cities[df_cities.city.str.strip().str.lower() == selected_city.strip().lower()]
+                st.text(selected_city)
+                lat = city_data.lat.iloc[0]
+                lng = city_data.lng.iloc[0]
+
+                data = api.get_data_weather_by_city(selected_city)
+                if data:
+                    # print(f"data: {data}")
+                    #st.write(f"data: {data}")
+                    show_weather_details(data, selected_city, selected_country)
+        else:
+            st.error("City not found in data.")
+
+
+def show_weather_details(data, city, country):
+    """
+    this function show the weather data to user
+    :param data: data from api
+    :param city: city selected by user
+    :param country: country selected by user
+    """
+    temp = data["main"]["temp"]
+    temp_min = data["main"]["temp_min"]
+    temp_max = data["main"]["temp_max"]
+    feels_like = data["main"]["feels_like"]
+    pressure = data["main"]["pressure"]
+    humidity = data["main"]["humidity"]
+    sea_level = data["main"]["sea_level"]
+
+    description = data["weather"][0]["description"]
+    icon = data["weather"][0]["icon"]
+    visibility = data["visibility"]
+
+    wind_speed = data["wind"]["speed"]
+    wind_deg = data["wind"]["deg"]
+
+    title = f"Weather in {city}, {country}"
+    st.title(f"{title}")
+
+    st.write(f"{description}")
+    st.write(f"↓{temp_min} / {temp_max}↑")
+    st.write(f"feels like {feels_like} C°")
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("pressure", value=pressure)
+    col2.metric("humidity", value=humidity)
+    col3.metric("sea level", value=sea_level)
+
+
+def get_countries_dic():
+    """this function gets all countries as dictionary
+     use for user choose"""
+    lst_countries = list(pycountry.countries)
+    countries_dic = {country.name: country.alpha_2 for country in lst_countries}
+    return countries_dic
+
+
+

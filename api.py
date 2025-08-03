@@ -5,10 +5,10 @@ import pandas as pd
 
 def get_data_weather_by_city(city: str, units="metric"):
     """
-    :param city: city name
-    :param units: units can be metric/imperial
     this function get a city from user
     and make an api call to openweathermap for getting weather in the entered city
+    :param city: city name
+    :param units: units can be metric/imperial
     """
     #city = input("Please enter a city: ")
     APPID = os.getenv("OPENWEATHERMAP_API_KEY")
@@ -27,7 +27,10 @@ def get_data_weather_by_city(city: str, units="metric"):
     return None
 
 def get_cities_data_from_file_by_country_name(country_name: str):
-
+    """
+    this function returns list of all cities associated with a country
+    :param country_name: country name
+    """
     folder_name = "Data"
     file_name = "worldcities.csv"
     file_path = os.path.join(folder_name, file_name)

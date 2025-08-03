@@ -249,6 +249,25 @@ files = [
 all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2)"]
 
 [[package]]
+name = "importlib-resources"
+version = "6.5.2"
+description = "Read resources from Python packages"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "importlib_resources-6.5.2-py3-none-any.whl", hash = "sha256:789cfdc3ed28c78b67a06acb8126751ced69a3d5f79c095a98298cd8a760ccec"},
+    {file = "importlib_resources-6.5.2.tar.gz", hash = "sha256:185f87adef5bcc288449d98fb4fba07cea78bc036455dd44c5fc4a2fe78fed2c"},
+]
+
+[package.extras]
+check = ["pytest-checkdocs (>=2.4)", "pytest-ruff (>=0.2.1)"]
+cover = ["pytest-cov"]
+doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+enabler = ["pytest-enabler (>=2.2)"]
+test = ["jaraco.test (>=5.4)", "pytest (>=6,!=8.1.*)", "zipp (>=3.17)"]
+type = ["pytest-mypy"]
+
+[[package]]
 name = "jinja2"
 version = "3.1.6"
 description = "A very fast and expressive template engine."
@@ -1101,6 +1120,21 @@ doc = ["reno", "sphinx"]
 test = ["pytest", "tornado (>=4.5)", "typeguard"]
 
 [[package]]
+name = "timezonefinderl"
+version = "4.0.2"
+description = "lightweight python package for finding the timezone of any point on earth (coordinates)"
+optional = false
+python-versions = "*"
+files = [
+    {file = "timezonefinderL-4.0.2-py3-none-any.whl", hash = "sha256:37f87f79254acc79999d45f77e29de4bcbda59388cf17622374fa763542c1d93"},
+    {file = "timezonefinderL-4.0.2.tar.gz", hash = "sha256:c41d913d3799f22c231e3006f92d756681e9132143bb67fbd91c561139f44706"},
+]
+
+[package.dependencies]
+importlib-resources = "*"
+numpy = "*"
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -1216,4 +1250,4 @@ watchmedo = ["PyYAML (>=3.10)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "61913a0d3263a219dc4d45dedd1906809eae69f5580f0af33980c44ed78e0848"
+content-hash = "8d3361fbf81ef8946a6d87946381d8ad0d638671b25079c5c8719d4770d1c291"

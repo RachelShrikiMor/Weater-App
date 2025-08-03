@@ -2,6 +2,7 @@ import streamlit as st
 import pycountry
 
 import api as api
+import utils.timezone_utils as timezone_utils
 
 
 def show_weather_country_city_select_box():
@@ -28,13 +29,14 @@ def show_weather_country_city_select_box():
 
                 city_data = df_cities[df_cities.city.str.strip().str.lower() == selected_city.strip().lower()]
                 st.text(selected_city)
+
                 lat = city_data.lat.iloc[0]
                 lng = city_data.lng.iloc[0]
 
+                show_curr_time_location(selected_city, selected_country, lng, lat)
+
                 data = api.get_data_weather_by_city(selected_city)
                 if data:
-                    # print(f"data: {data}")
-                    #st.write(f"data: {data}")
                     show_weather_details(data, selected_city, selected_country)
         else:
             st.error("City not found in data.")
@@ -74,13 +76,25 @@ def show_weather_details(data, city, country):
     col2.metric("humidity", value=humidity)
     col3.metric("sea level", value=sea_level)
 
-
 def get_countries_dic():
     """this function gets all countries as dictionary
      use for user choose"""
     lst_countries = list(pycountry.countries)
     countries_dic = {country.name: country.alpha_2 for country in lst_countries}
     return countries_dic
+
+def show_curr_time_location(city: str, country: str, lng, lat):
+    """
+    this function show current date and time
+    according location data:longitude, latitude
+    :param city: city name
+    :param country: country name
+    :param lng: longitude location
+    :param lat: latitude location
+    """
+    formatted_user_time = timezone_utils.display_date_time(lng, lat)
+    st.write(f"current date and time in {city}, {country} is: {formatted_user_time}")
+
 
 
 

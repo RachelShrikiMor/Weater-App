@@ -11,6 +11,9 @@ load_dotenv()
 
 #load html style
 ui_utils.load_css("assets/styles.css")
+
+ui_utils.show_top_bar()
+
 #load session settings
 ui_settings.load_settings_from_file_or_session()
 

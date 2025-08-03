@@ -4,3 +4,28 @@ div.stMetric.st-emotion-cache-10klw3m.e1xhnmc50{
     border-radius: 10px;
     padding: 5% 5% 5% 5%;
 }
+
+/*stAppToolbar.st-emotion-cache-14vh5up.e3g0k5y2{
+    background-color: #F08080;
+}*/
+
+/* Top bar styling */
+.top-bar {
+    background-color: #F08080; /* LightCoral background */
+    color: 	#FFEBCD; /* almond */
+    /*padding: 12px 24px;*/
+    font-size: 20px;
+    /*font-weight: 600;*/
+    position: fixed;
+    /*top: 20;*/
+    left: 0;
+    width: 100%;
+    /*z-index: 999;*/
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Spacer so content below isn't hidden */
+.top-bar-spacer {
+    height: 60px;
+}

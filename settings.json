@@ -1,0 +1,9 @@
+{
+    "units": "imperial",
+    "language": "English",
+    "dark_mode": false,
+    "default_location": {
+        "country": "Israel",
+        "city": "Netanya"
+    }
+}

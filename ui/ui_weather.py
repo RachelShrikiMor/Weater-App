@@ -3,6 +3,7 @@ import pycountry
 
 import api as api
 import utils.timezone_utils as timezone_utils
+import ui.ui_settings as ui_settings
 
 
 def show_weather_country_city_select_box():
@@ -35,19 +36,22 @@ def show_weather_country_city_select_box():
 
                 show_curr_time_location(selected_city, selected_country, lng, lat)
 
-                data = api.get_data_weather_by_city(selected_city)
+                ui_settings.show_button_save_default_location(selected_country, selected_city)
+
+                data = api.get_data_weather_by_city(selected_city, units=st.session_state.units)
                 if data:
-                    show_weather_details(data, selected_city, selected_country)
+                    show_weather_details(data, selected_city, selected_country,  st.session_state.units_sign)
         else:
             st.error("City not found in data.")
 
 
-def show_weather_details(data, city, country):
+def show_weather_details(data, city, country, units_sign):
     """
     this function show the weather data to user
     :param data: data from api
     :param city: city selected by user
     :param country: country selected by user
+    :param units_sign: C or F
     """
     temp = data["main"]["temp"]
     temp_min = data["main"]["temp_min"]
@@ -66,10 +70,11 @@ def show_weather_details(data, city, country):
 
     title = f"Weather in {city}, {country}"
     st.title(f"{title}")
+    st.title(f"{temp} {units_sign}°")
 
     st.write(f"{description}")
     st.write(f"↓{temp_min} / {temp_max}↑")
-    st.write(f"feels like {feels_like} C°")
+    st.write(f"feels like {feels_like} {units_sign}°")
 
     col1, col2, col3 = st.columns(3)
     col1.metric("pressure", value=pressure)

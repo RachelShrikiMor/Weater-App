@@ -1,11 +1,9 @@
 #  main.py - streamlit main file
 from dotenv import load_dotenv
-import streamlit as st
 
 import ui.ui_weather as ui_weather
 import ui.ui_utils as ui_utils
 import ui.ui_settings as ui_settings
-import utils.settings_manager_utils as settings_manager
 
 # reads the .env file
 load_dotenv()

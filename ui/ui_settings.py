@@ -49,7 +49,7 @@ def show_settings_panel_content():
 def show_settings_default_location():
     # Use current units from session
     user_default_location = settings_manager.get_default_location() #user_default_location: dict[str, str]
-    units_settings = st.session_state.get("units", "metric")
+    units = st.session_state.get("units", "metric")
     units_sign = st.session_state.get("units_sign", "C")
 
     if user_default_location and "country" in user_default_location and "city" in user_default_location:
@@ -57,7 +57,7 @@ def show_settings_default_location():
         user_default_city = user_default_location['city']
         if user_default_country and user_default_city:
             st.text(f"your default location is: {user_default_city} ,{user_default_country}")
-            data_default_location = api.get_data_weather_by_city(user_default_city, units_settings)
+            data_default_location = api.get_data_weather_by_city(user_default_city, units)
             if data_default_location:
                 st.text(f"{data_default_location['main']['temp']} {units_sign}°")
                 st.write(f"↓{data_default_location['main']['temp_min']} / {data_default_location['main']['temp_max']}↑")

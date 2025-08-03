@@ -4,6 +4,7 @@ import pycountry
 import api as api
 import utils.timezone_utils as timezone_utils
 import ui.ui_settings as ui_settings
+import ui.ui_favorite as ui_favorite
 
 
 def show_weather_country_city_select_box():
@@ -37,6 +38,8 @@ def show_weather_country_city_select_box():
                 show_curr_time_location(selected_city, selected_country, lng, lat)
 
                 ui_settings.show_button_save_default_location(selected_country, selected_city)
+
+                ui_favorite.show_button_add_favorite(selected_country, selected_city)
 
                 data = api.get_data_weather_by_city(selected_city, units=st.session_state.units)
                 if data:

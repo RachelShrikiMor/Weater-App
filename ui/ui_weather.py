@@ -75,7 +75,12 @@ def show_weather_details(data, city, country, units_sign):
 
     title = f"Weather in {city}, {country}"
     st.title(f"{title}")
-    st.title(f"{temp} {units_sign}°")
+
+    col1, col2 = st.columns([1, 3])
+    with col1:
+        st.title(f"{temp} {units_sign}°")
+    with col2:
+        st.image(f"https://openweathermap.org/img/wn/{icon}@2x.png", width=60)
 
     st.write(f"{description}")
     st.write(f"↓{temp_min} / {temp_max}↑")

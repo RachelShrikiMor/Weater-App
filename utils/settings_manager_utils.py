@@ -37,6 +37,20 @@ def get_language():
     user_settings = load_settings()
     return user_settings.get("language", None)
 
+
+def delete_favorite(index):
+    user_settings = load_settings()
+    favorites = user_settings.get("favorite_locations", [])
+    #favorites = get_favorite_locations()
+    if 0 <= index < len(favorites):
+        del favorites[index]
+        if favorites: # chk if still have values in list after deletion
+            user_settings["favorite_locations"] = favorites
+        else:
+            # List is empty → remove the key entirely
+            user_settings.pop("favorite_locations", None)
+        save_settings(user_settings)
+
 def add_favorite_location(country: str, city: str) -> None:
     user_settings = load_settings()
     if not isinstance(user_settings.get("favorite_locations"), list):

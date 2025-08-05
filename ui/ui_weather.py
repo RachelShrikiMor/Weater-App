@@ -110,11 +110,7 @@ def show_curr_time_location(city: str, country: str, lng, lat):
     formatted_user_time = timezone_utils.display_date_time(lng, lat)
     st.write(f"current date and time in {city}, {country} is: {formatted_user_time}")
 
-def show_feedback():
-    st.write(":orange[**rate us**]")
-    selected = st.feedback("stars")
-    if selected:
-        st.write("Thanks for your feedback")
+
 
 
 

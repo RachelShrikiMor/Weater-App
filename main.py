@@ -28,7 +28,9 @@ ui_settings.show_settings_panel_title()
 
 ui_settings.show_settings_panel_content()
 
-ui_weather.show_feedback()
+ui_utils.show_feedback()
+
+ui_utils.show_rights_reserved()
 
 
 

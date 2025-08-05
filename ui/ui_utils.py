@@ -13,3 +13,12 @@ def show_top_bar():
     #    </div>
     #    <div class="top-bar-spacer"></div>
     #""", unsafe_allow_html=True)
+
+def show_feedback():
+    st.write(":orange[**rate us**]")
+    selected = st.feedback("stars")
+    if selected:
+        st.write("Thanks for your feedback")
+
+def show_rights_reserved():
+    st.write("© All rights reserved to Shriki Rachel")

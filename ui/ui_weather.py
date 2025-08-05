@@ -16,8 +16,8 @@ def show_weather_country_city_select_box():
     """
     countries = get_countries_dic()
     # sorted(countries.keys())
-    selected_country = st.selectbox("Please_select_a_country", sorted(countries.keys()), index=None,
-                                    placeholder="Please_select_a_country")
+    selected_country = st.selectbox("Please select a country", sorted(countries.keys()), index=None,
+                                    placeholder="Please select a country")
 
     if selected_country:
         st.text(selected_country)

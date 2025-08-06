@@ -3,6 +3,7 @@ import os
 import pandas as pd
 
 
+
 def get_data_weather_by_city(city: str, units="metric"):
     """
     this function get a city from user
@@ -73,3 +74,48 @@ def get_cities_data_from_file_by_country_name(country_name: str):
     except Exception as e:
         print(f"Error loading CSV file: {e}")
         return None
+
+
+def get_historical_weather(lat, lon, start_date, end_date, temperature_unit):
+    """
+    this function get historical data for specific location and time
+    this function use open-meteo api (free to use. no api-key needed)
+    :param lat: latitude
+    :param lon: longitude
+    :param start_date: start date
+    :param end_date: end date
+    :param temperature_unit: celsius or fahrenheit
+    :return: json
+    example:
+    for this call - get_historical_weather("31.4117", "35.0818", "2024-01-01", "2024-01-02", None)
+    the result is for 2 days:
+    {'latitude': 31.3884,
+    'longitude': 35.11933,
+    'generationtime_ms': 0.05340576171875,
+    'utc_offset_seconds': 10800, 'timezone': 'Asia/Jerusalem',
+    'timezone_abbreviation': 'GMT+3', 'elevation': 693.0,
+    'daily_units': {'time': 'iso8601', 'temperature_2m_max': '°C', 'temperature_2m_min': '°C'},
+    'daily': {
+    'time': ['2024-01-01', '2024-01-02'],
+    'temperature_2m_max': [16.3, 14.9], 'temperature_2m_min': [10.1, 8.8]
+    } }
+    """
+    url = "https://archive-api.open-meteo.com/v1/archive"
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "start_date": start_date,
+        "end_date": end_date,
+        "daily": "temperature_2m_max,temperature_2m_min", #for show the max\min daily temperature
+        "timezone": "auto", #time zone by coordinates
+        "temperature_unit": temperature_unit
+    }
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error getting historical weather data: {e}")
+        return None
+
+

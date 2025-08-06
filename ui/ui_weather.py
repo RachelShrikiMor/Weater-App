@@ -1,11 +1,16 @@
 import streamlit as st
 import pycountry
+from typing import Any
+import  pandas as pd
+import matplotlib.pyplot as plt
+
 
 import api as api
 import utils.timezone_utils as timezone_utils
 import ui.ui_settings as ui_settings
 import ui.ui_favorite as ui_favorite
 import ui.ui_map as ui_map
+import  utils.data_utils as data_utils
 
 
 def show_weather_country_city_select_box():
@@ -46,6 +51,7 @@ def show_weather_country_city_select_box():
                 if data:
                     show_weather_details(data, selected_city, selected_country,  st.session_state.units_sign)
                     ui_map.show_map_for_location(lat, lng, selected_city, selected_country)
+                    show_average_dataframe(lat, lng, st.session_state.units, 5, selected_city, selected_country)
         else:
             st.error("City not found in data.")
 
@@ -109,6 +115,39 @@ def show_curr_time_location(city: str, country: str, lng, lat):
     """
     formatted_user_time = timezone_utils.display_date_time(lng, lat)
     st.write(f"**current date-time in {city}, {country} is:** {formatted_user_time}")
+
+def show_average_dataframe(lat, lon, units, num_years, city: str, country: str):
+    with st.spinner("Getting weather data..."):
+        #st.write(f"lat={lat}, lon={lon}, units={units}, num_years={num_years}") # for debug
+        year_data = data_utils.get_average_data_for_past_years(lat, lon, units, num_years)
+        if year_data:
+            # Convert to DataFrame for plotting
+            df = pd.DataFrame(list(year_data.items()), columns=["Year", "Avg Max Temp"])
+            df = df.sort_values("Year")
+
+            # Show DataFrame in Streamlit ( table)
+            st.write("### 🧾Temperature Data Table")#
+            st.dataframe(df)  # Show table
+
+            # Show chart
+            st.subheader(f"📈 Average Max Temperature per Year in:")
+            st.write(f"###    {city},{country}")#st.subheader(f"   in {city},{country}")
+            fig, ax = plt.subplots()
+            ax.bar(df["Year"], df["Avg Max Temp"])
+            ax.set_ylabel("Avg Max Temp (°C)")
+            ax.set_xlabel("Year")
+            ax.set_title(f"Yearly Max Temp in {city}")
+            st.pyplot(fig)
+
+        else:
+            st.warning("No temperature data found.")
+
+
+
+        #show_dataframe(year_data, city, country)
+
+
+
 
 
 

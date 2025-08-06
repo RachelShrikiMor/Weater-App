@@ -108,7 +108,7 @@ def show_curr_time_location(city: str, country: str, lng, lat):
     :param lat: latitude location
     """
     formatted_user_time = timezone_utils.display_date_time(lng, lat)
-    st.write(f"current date and time in {city}, {country} is: {formatted_user_time}")
+    st.write(f"**current date-time in {city}, {country} is:** {formatted_user_time}")
 
 
 

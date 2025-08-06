@@ -56,11 +56,17 @@ def show_settings_default_location():
         user_default_country = user_default_location['country']
         user_default_city = user_default_location['city']
         if user_default_country and user_default_city:
-            st.text(f"your default location is: {user_default_city} ,{user_default_country}")
+
             data_default_location = api.get_data_weather_by_city(user_default_city, units)
             if data_default_location:
-                st.text(f"{data_default_location['main']['temp']} {units_sign}°")
-                st.write(f"↓{data_default_location['main']['temp_min']} / {data_default_location['main']['temp_max']}↑")
+                with st.expander("Default location  details"):
+                    st.markdown(f"**City**: {user_default_city} ,**Country**: {user_default_country}")
+                    st.markdown(f"**Temperature**: {data_default_location['main']['temp']} {units_sign}°")
+                    st.markdown(f"↓{data_default_location['main']['temp_min']} / {data_default_location['main']['temp_max']}↑")
+
+                #st.text(f"your default location is: {user_default_city} ,{user_default_country}")
+                #st.text(f"{data_default_location['main']['temp']} {units_sign}°")
+                #st.write(f"↓{data_default_location['main']['temp_min']} / {data_default_location['main']['temp_max']}↑")
 
 def show_button_save_default_location(country, city):
     """

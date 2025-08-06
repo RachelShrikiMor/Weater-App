@@ -35,7 +35,7 @@ OPENWEATHER_API_KEY=your_api_key_here
 
 ### 4.Run the app:
 
-streamlit run app.py
+streamlit run main.py
 
 
 
